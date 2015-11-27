@@ -314,7 +314,7 @@ public class DisplayHelper implements IDisplayHelper, ScaleGestureDetector.OnSca
         mSrcBitmapWidth = mSrcBitmap.getWidth();
         mSrcBitmapHeight = mSrcBitmap.getHeight();
         RectF srcRect = new RectF(0, 0, mSrcBitmapWidth, mSrcBitmapHeight);
-        final boolean isVertical = mSrcBitmapHeight > mSrcBitmapWidth;
+        final boolean isVertical = mSrcBitmapHeight / cropHeight > mSrcBitmapWidth / cropWidth;
         if (isVertical) {
             newDrawabelWidth = cropWidth;
             newDrawabelHeight = mSrcBitmapHeight * (cropWidth / mSrcBitmapWidth);
@@ -687,6 +687,8 @@ public class DisplayHelper implements IDisplayHelper, ScaleGestureDetector.OnSca
         }
 
         protected void drawMesh(Canvas canvas) {
+            if (mMeshRect.width() <= 0 || mMeshRect.height() <= 0)
+                return;
             mMeshDrawable.setAlpha(Math.round(255 * mAlpha));
             mMeshDrawable.setBounds(mMeshRect);
             mMeshDrawable.draw(canvas);
